@@ -1,26 +1,9 @@
 package com.chrosciu;
 
 import java.util.List;
-import java.util.Scanner;
 
-import static com.chrosciu.Color.BLACK;
-import static com.chrosciu.Color.GOLDEN;
-
-class InputReader {
-    private final Scanner scanner;
-
-    public InputReader() {
-        this.scanner = new Scanner(System.in);
-    }
-
-    public boolean hasToken() {
-        return scanner.hasNext();
-    }
-
-    public String getToken() {
-        return scanner.next();
-    }
-}
+import static com.chrosciu.Cars.FIAT;
+import static com.chrosciu.Cars.TOYOTA;
 
 public class CarSearch {
     private final CarRepository carRepository;
@@ -28,8 +11,8 @@ public class CarSearch {
 
     public CarSearch() {
         this.carRepository = new CarRepository();
-        carRepository.add(new Car(GOLDEN, "Fiat Punto", 5000));
-        carRepository.add(new HybridCar(BLACK, "Toyota Prius", 100000));
+        carRepository.add(FIAT);
+        carRepository.add(TOYOTA);
 
         this.inputReader = new InputReader();
     }
@@ -37,16 +20,7 @@ public class CarSearch {
     public void searchLoop() {
         while (inputReader.hasToken()) {
             String query = inputReader.getToken();
-
-            List<Car> cars = carRepository.getAll();
-
-            for (Car car: cars) {
-                if (matches(car, query)) {
-                    print(car);
-                }
-            }
-
-            cars.stream().filter(c -> matches(c, query)).forEach(this::print);
+            search(query);
         }
     }
 
@@ -54,8 +28,18 @@ public class CarSearch {
         new CarSearch().searchLoop();
     }
 
+    private void search(String query) {
+        List<Car> cars = carRepository.getAll();
+
+        for (Car car: cars) {
+            if (matches(car, query)) {
+                print(car);
+            }
+        }
+    }
+
     private boolean matches(Car car, String query) {
-        return car.getModel().contains(query);
+        return car.getModel().toLowerCase().contains(query.toLowerCase());
     }
 
     private void print(Car car) {

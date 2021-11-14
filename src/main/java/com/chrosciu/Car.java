@@ -10,7 +10,7 @@ import static com.chrosciu.EngineState.STOPPED;
 
 @RequiredArgsConstructor
 @Getter
-@ToString
+@ToString(doNotUseGetters = true)
 public class Car implements WithEngine {
     private final Color color;
     private final String model;

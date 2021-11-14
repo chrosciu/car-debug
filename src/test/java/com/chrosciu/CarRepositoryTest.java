@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.chrosciu.Color.GOLDEN;
+import static com.chrosciu.Cars.FIAT;
 
 public class CarRepositoryTest {
 
@@ -15,11 +15,10 @@ public class CarRepositoryTest {
     @SneakyThrows
     public void shouldNotAllowToAddTheSameCarTwice() {
         CarRepository carRepository = new CarRepository();
-        Car car = new Car(GOLDEN, "Fiat Punto", 5000);
         List<Boolean> results = new ArrayList<>();
 
         Runnable action = () -> {
-            boolean result = carRepository.add(car);
+            boolean result = carRepository.add(FIAT);
             results.add(result);
         };
 
